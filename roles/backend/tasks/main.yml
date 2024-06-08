@@ -34,7 +34,7 @@
     name:
       PyMySQL
       cryptography
-    executable: 3.9
+    executable: 3.11
 
 
 - name: Load Schema
