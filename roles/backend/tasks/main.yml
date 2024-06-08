@@ -37,14 +37,6 @@
     executable: 3.9
 
 
-
-- name: Start Backend Service
-  ansible.builtin.systemd_service:
-    name: backend
-    state: started
-    enabled: yes
-    daemon-reload: yes
-
 - name: Load Schema
   community.mysql.mysql_db:
     state: import
@@ -53,3 +45,10 @@
     login_user: root
     login_password: ExpenseApp@1
     login_host: mysql-dev.rajdevops.online
+
+- name: Start Backend Service
+  ansible.builtin.systemd_service:
+    name: backend
+    state: started
+    enabled: yes
+    daemon-reload: yes
