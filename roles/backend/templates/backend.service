@@ -1,11 +1,17 @@
+
 [Unit]
 Description = Backend Service
 
 [Service]
-User=expense
+User={{ app_user }}
+WorkingDirectory=/app
 Environment=DB_HOST="mysql-{{ env }}.rajdevops.online"
-ExecStart=/bin/node /app/index.js
+Environment=NEW_RELIC_APP_NAME=backend
+Environment=NEW_RELIC_LICENSE_KEY="NRAK-XOBALMAN3M98YVAQHV3Y6CDPSMP"
+ExecStart=/bin/node -r newrelic /app/index.js
 SyslogIdentifier=backend
 
 [Install]
 WantedBy=multi-user.target
+
+
