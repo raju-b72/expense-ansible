@@ -9,7 +9,7 @@ pipelines:
         auto_update: true
         branch: main
     stages:
-     - DEV:
+    - DEV:
          fetch_materials: true
          environment variables:
            env: dev
@@ -18,7 +18,7 @@ pipelines:
          jobs:
            ansible-playbook:
              tasks:
-               - exec:
+              - exec:
                    arguments:
                      - ansible.sh
                      - frontend
@@ -26,7 +26,7 @@ pipelines:
                    run_if: passed
 
 
-     - QA:
+    - QA:
          fetch_materials: true
          environment variables:
            env: qa
@@ -34,15 +34,15 @@ pipelines:
            type: manual
          jobs:
            ansible-playbook:
-             tasks:
-               - exec:
+           tasks:
+             - exec:
                    arguments:
                      - ansible.sh
                      - frontend
                    command: bash
                    run_if: passed
 
-     - PROD:
+    - PROD:
          fetch_materials: true
          environment variables:
            env: prod
@@ -50,15 +50,15 @@ pipelines:
            type: manual
          jobs:
            ansible-playbook:
-             tasks:
-               - exec:
+           tasks:
+             - exec:
                    arguments:
                      - ansible.sh
                      - frontend
                    command: bash
                    run_if: passed
 
-     - STAGE:
+    - STAGE:
          fetch_materials: true
          environment variables:
            env: stage
@@ -66,7 +66,7 @@ pipelines:
            type: manual
          jobs:
            ansible-playbook:
-             tasks:
+           tasks:
                - exec:
                    arguments:
                      - ansible.sh
