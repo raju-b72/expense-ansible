@@ -1,7 +1,9 @@
+
 format_version: 10
 pipelines:
-  frontend:
+  expense-frontend:
     group: defaultGroup
+    label_template: "${env:APP_VERSION}"
     materials:
       git-da613e5:
         git: https://github.com/raju-b72/expense-ansible.git
@@ -10,68 +12,67 @@ pipelines:
         branch: main
     secure_variables:
       vault_token: AES:II3GazUX2Axs2MyxWBR93w==:O8SLtfHszWHwMSov2wQnaubhnJUhUKuQuynl/I7u7S8=
+    environment_variables:
+      APP_VERSION: ""
     stages:
-    - DEV:
-         fetch_materials: true
-         environment variables:
-           env: dev
-         approval:
-           type: manual
-         jobs:
-           ansible-playbook:
-             tasks:
-              - exec:
-                   arguments:
-                     - ansible.sh
-                     - frontend
-                   command: bash
-                   run_if: passed
+      - DEV:
+          fetch_materials: true
+          environment_variables:
+            env: dev
+          approval:
+            type: manual
+          jobs:
+            ansible-playbook:
+              tasks:
+                - exec:
+                    arguments:
+                      - ansible.sh
+                      - frontend
+                    command: bash #bash ansible.sh frontend
+                    run_if: passed
+      - QA:
+          fetch_materials: true
+          environment_variables:
+            env: qa
+          approval:
+            type: manual
+          jobs:
+            ansible-playbook:
+              tasks:
+                - exec:
+                    arguments:
+                      - ansible.sh
+                      - frontend
+                    command: bash #bash ansible.sh frontend
+                    run_if: passed
 
-
-    - QA:
-         fetch_materials: true
-         environment variables:
-           env: qa
-         approval:
-           type: manual
-         jobs:
-           ansible-playbook:
-           tasks:
-             - exec:
-                   arguments:
-                     - ansible.sh
-                     - frontend
-                   command: bash
-                   run_if: passed
-
-    - PROD:
-         fetch_materials: true
-         environment variables:
-           env: prod
-         approval:
-           type: manual
-         jobs:
-           ansible-playbook:
-           tasks:
-             - exec:
-                   arguments:
-                     - ansible.sh
-                     - frontend
-                   command: bash
-                   run_if: passed
-
-    - STAGE:
-         fetch_materials: true
-         environment variables:
-           env: stage
-         approval:
-           type: manual
-         jobs:
-           ansible-playbook:
-           tasks:
-               - exec:
-                   arguments:
-                     - ansible.sh
-                     - frontend
-                   command: bash
-                   run_if: passed
+      - STAGE:
+          fetch_materials: true
+          environment_variables:
+            env: stage
+          approval:
+            type: manual
+          jobs:
+            ansible-playbook:
+              tasks:
+                - exec:
+                    arguments:
+                      - ansible.sh
+                      - frontend
+                    command: bash #bash ansible.sh frontend
+                    run_if: passed
+      - PROD:
+          fetch_materials: true
+          environment_variables:
+            env: prod
+          approval:
+            type: manual
+          jobs:
+            ansible-playbook:
+              tasks:
+                - exec:
+                    arguments:
+                      - ansible.sh
+                      - frontend
+                    command: bash #bash ansible.sh frontend
+                    run_if: passed
